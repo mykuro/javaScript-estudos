@@ -49,6 +49,14 @@ function iniciarJogo() {
     if(snake[0].y > 15 * box && direction == "down") snake[0].y = 0;
     if(snake[0].y < 0 && direction == "up") snake[0].y = 16 * box;
 
+    //se cabeça chocar com o corpo o jogo acaba
+    for(i = 1; i < snake.length; i++) {
+        if(snake[0].x == snake[i].x && snake[0].y == snake[i].y){
+            clearInterval(jogo);
+            alert('Game Over')
+        }
+    }
+
     //chamando as funções
     criarBG();
     criarCobrinha();
@@ -62,7 +70,13 @@ function iniciarJogo() {
     if(direction == "up") snakeY -= box;
     if(direction == "down") snakeY += box;
 
-    snake.pop();
+    //aumentar tamanho da cobrinha
+    if(snakeX != food.x || snakeY != food.y) {
+        snake.pop();
+    }
+    else{food.x = Math.floor(Math.random() * 15 + 1) * box;
+        food.y = Math.floor(Math.random() * 15 + 1) * box;
+    }
 
     let newHead = {
         x: snakeX,
